@@ -1,0 +1,12 @@
+The reason is that the hashcode() method in Employee haven't overrided yet.
+So it cannot remove duplicate value in method removeDuplicates()
+
+Solution - Override hascode() method in Employee like this:
+
+    @Override
+	public boolean equals(Object ob) {
+		if(ob == null) return false;
+		if(!(ob instanceof Employee)) return false;
+		Employee emp = (Employee)ob;
+		return emp.name.equals(name) && emp.salary == salary;
+	}

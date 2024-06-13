@@ -1,0 +1,11 @@
+The reason is that the equals() method in Employee haven't overrided yet.
+So when `if(!l2.contains(e)) return false;` called in method listsAreEqual(). It always return false;
+
+Solution - Modify equals() method in Employee like this:
+    @Override
+	public boolean equals(Object obj) {
+		if (obj == null) return false;
+		if (!(obj instanceof Employee)) return false;
+		Employee e = (Employee) obj;
+		return e.name.equals(name) && e.salary == salary;
+	}

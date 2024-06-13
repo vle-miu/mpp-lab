@@ -1,0 +1,43 @@
+The reason is that the key of map shouldn't modify.
+
+Solution 1:
+    2 employees is equals if they have the same name and salary.
+    So we don't need to compare visited or create hashcode with visited
+
+    -> Modify equals() and hashcode() method like this
+
+    @Override
+	public boolean equals(Object ob) {
+		if(ob == null) return false;
+		if(!(ob instanceof Employee)) return false;
+		Employee emp = (Employee)ob;
+		return emp.name.equals(name) && emp.salary == salary; //&& emp.visited == visited;
+	}
+
+	@Override
+    public int hashCode() {
+        int result = 17;
+        long longval = Double.doubleToLongBits(salary);
+        int salaryHash = (int) (longval ^ (longval >>> 32));
+        result += 31 * result + name.hashCode();
+        result += 31 * result + salaryHash;
+        // result += 31 * result + (visited ? 1 : 0);
+        return result;
+    }
+
+Solution 2:
+    Modify removeDuplicates() in EmployeeInfo like this
+
+    public static List<Employee> removeDuplicates(List<Employee> employees) {
+        HashMap<Employee, Employee> tracker = new HashMap<>();
+        List<Employee> noDupsList = new ArrayList<>();
+        for(int i = 0; i < employees.size(); ++i) {
+            Employee e = employees.get(i);
+            if(!tracker.containsKey(e)) {
+                tracker.put(e, e);
+                noDupsList.add(e);
+            }
+        }
+        return noDupsList;
+    }
+
