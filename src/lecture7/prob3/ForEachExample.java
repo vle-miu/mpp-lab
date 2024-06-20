@@ -11,17 +11,18 @@ public class ForEachExample {
 	public static void main(String[] args) {
 		List<String> list = Arrays.asList("Hello there", "Goodbye", "Back soon", 
 				"Away", "On Vacation", "Everywhere you want to be");
-		
 
-		//implement a Consumer
-		Consumer<String> consumer = new Consumer<String>() {
-			@Override
-			public void accept(String s) {
-				System.out.println(s.toUpperCase());
-			}
-		};
 
 		//print each element of the list in upper case format
-		list.forEach(consumer);
+		ConsumerImpl impl = new ConsumerImpl();
+		list.forEach(impl::accept);
+	}
+
+	//implement a Consumer
+	static class ConsumerImpl implements Consumer<String> {
+		@Override
+		public void accept(String s) {
+			System.out.println(s.toUpperCase());
+		}
 	}
 }
